@@ -26,7 +26,8 @@ paru -S --noconfirm \
   mattermost-desktop-bin \
   ttf-jetbrains-mono \
   ttf-jetbrains-mono-nerd \
-  bitwarden-bin
+  bitwarden-bin \
+  neofetch
 
 echo "=== 🔐 Génération clé SSH GitHub ==="
 if [ ! -f ~/.ssh/id_ed25519_github ]; then
