@@ -7,6 +7,8 @@ sudo pacman -Syu --noconfirm
 echo "=== 🧰 Installation des paquets de base ==="
 sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gnome-tweaks gnome-shell-extensions chromium
 
+chromium https://extensions.gnome.org/extension/3843/just-perfection/ >/dev/null 2>&1 & disown
+
 echo "=== ⚙️ Installation de paru (AUR helper) ==="
 if ! command -v paru &> /dev/null; then
   cd /tmp
