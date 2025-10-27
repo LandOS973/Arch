@@ -178,6 +178,8 @@ EOF
 echo "=== 🐚 Passage à zsh comme shell par défaut ==="
 chsh -s $(which zsh)
 
+source ~/.zshrc
+
 echo ""
 echo "✅ Installation terminée !"
 echo "🔑 Copie ta clé SSH affichée ci-dessus sur GitHub (Settings → SSH Keys → New Key)"
