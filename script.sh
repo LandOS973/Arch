@@ -9,6 +9,8 @@ sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gn
 
 chromium https://extensions.gnome.org/extension/3843/just-perfection/ >/dev/null 2>&1 & disown
 
+echo "=== PARAMS JUST PERFECTION => minimal et Dash Visibility décochée === \n"
+
 echo "=== ⚙️ Installation de paru (AUR helper) ==="
 if ! command -v paru &> /dev/null; then
   cd /tmp
