@@ -161,7 +161,7 @@ echo "=== 🧠 Configuration de VS Code ==="
 mkdir -p ~/.config/Code/User
 cat > ~/.config/Code/User/settings.json <<'EOF'
 {
-  "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+  "editor.fontFamily": "'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', 'monospace'",
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', monospace",
   "terminal.integrated.shell.linux": "/usr/bin/zsh",
   "editor.fontLigatures": true,
