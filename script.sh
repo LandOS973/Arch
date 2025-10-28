@@ -7,6 +7,8 @@ sudo pacman -Syu --noconfirm
 echo "=== 🧰 Installation des paquets de base ==="
 sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gnome-tweaks gnome-shell-extensions chromium linux-firmware
 
+echo -e "KEYMAP=fr\nFONT=Lat2-Terminus16" | sudo tee /etc/vconsole.conf >/dev/null
+
 chromium https://extensions.gnome.org/extension/3843/just-perfection/ >/dev/null 2>&1 & disown
 
 echo "=== PARAMS JUST PERFECTION => minimal et Dash Visibility décochée === \n"
