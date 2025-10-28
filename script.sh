@@ -22,6 +22,12 @@ else
   echo "Paru déjà installé ✅"
 fi
 
+if grep -qi "intel" /proc/cpuinfo; then
+  sudo pacman -S --noconfirm intel-ucode
+elif grep -qi "amd" /proc/cpuinfo; then
+  sudo pacman -S --noconfirm amd-ucode
+fi
+
 echo "=== 💻 Installation des applis de dev et outils utiles ==="
 paru -S --noconfirm \
   visual-studio-code-bin \
