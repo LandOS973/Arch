@@ -187,7 +187,7 @@ sudo systemctl restart systemd-vconsole-setup.service || true
 
 # Nettoyage des fichiers inutiles
 sudo pacman -Sc --noconfirm
-paru -Sc --noconfirm || tru
+paru -Sc --noconfirm || true
 
 echo ""
 echo "✅ Installation terminée !"
