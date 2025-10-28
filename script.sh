@@ -7,8 +7,6 @@ sudo pacman -Syu --noconfirm
 echo "=== 🧰 Installation des paquets de base ==="
 sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gnome-tweaks gnome-shell-extensions chromium linux-firmware
 
-echo -e "KEYMAP=fr\nFONT=Lat2-Terminus16" | sudo tee /etc/vconsole.conf >/dev/null
-
 chromium https://extensions.gnome.org/extension/3843/just-perfection/ >/dev/null 2>&1 & disown
 
 echo "=== PARAMS JUST PERFECTION => minimal et Dash Visibility décochée === \n"
@@ -181,6 +179,15 @@ echo "=== 🐚 Passage à zsh comme shell par défaut ==="
 chsh -s $(which zsh)
 
 source ~/.zshrc
+
+# Correction du warning "no font found in config"
+sudo pacman -S --noconfirm terminus-font
+echo -e "KEYMAP=fr\nFONT=Lat2-Terminus16" | sudo tee /etc/vconsole.conf >/dev/null
+sudo systemctl restart systemd-vconsole-setup.service || true
+
+# Nettoyage des fichiers inutiles
+sudo pacman -Sc --noconfirm
+paru -Sc --noconfirm || tru
 
 echo ""
 echo "✅ Installation terminée !"
