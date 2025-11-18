@@ -9,7 +9,8 @@ sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gn
 
 chromium https://extensions.gnome.org/extension/3843/just-perfection/ >/dev/null 2>&1 & disown
 
-echo "=== PARAMS JUST PERFECTION => minimal et Dash Visibility décochée === \n"
+echo "=== PARAMS JUST PERFECTION => minimal et Dash Visibility décochée ==="
+echo ""
 
 echo "=== ⚙️ Installation de paru (AUR helper) ==="
 if ! command -v paru &> /dev/null; then
@@ -22,6 +23,7 @@ else
   echo "Paru déjà installé ✅"
 fi
 
+echo "=== 🧬 Microcode CPU ==="
 if grep -qi "intel" /proc/cpuinfo; then
   sudo pacman -S --noconfirm intel-ucode
 elif grep -qi "amd" /proc/cpuinfo; then
@@ -41,13 +43,21 @@ paru -S --noconfirm \
 
 echo "=== 🔐 Génération clé SSH GitHub ==="
 if [ ! -f ~/.ssh/id_ed25519_github ]; then
+  mkdir -p ~/.ssh
+  chmod 700 ~/.ssh
+
+  # Clé SSH SANS mot de passe, liée à ton email GitHub
   ssh-keygen -t ed25519 -C "thomas.landais9733@gmail.com" -f ~/.ssh/id_ed25519_github -N ""
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_ed25519_github
+
   echo ""
-  echo "👉 Voici ta clé publique à copier sur GitHub :"
+  echo "👉 Voici ta clé publique à copier sur GitHub (première fois) :"
   cat ~/.ssh/id_ed25519_github.pub
   echo ""
+
+  # Ouvre directement la page des clés SSH GitHub dans Chromium
+  chromium https://github.com/settings/keys >/dev/null 2>&1 & disown
 else
   echo "Clé SSH déjà existante ✅"
 fi
@@ -58,10 +68,11 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 echo "=== 🎨 Installation de Powerlevel10k et des plugins ==="
 ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-git clone --depth=1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
+git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+git clone --depth=1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --all
 
 echo "=== 🧩 Création du fichier .zshrc ==="
 cat > ~/.zshrc <<'EOF'
@@ -182,23 +193,32 @@ cat > ~/.config/Code/User/settings.json <<'EOF'
 EOF
 
 echo "=== 🐚 Passage à zsh comme shell par défaut ==="
-chsh -s $(which zsh)
-
-source ~/.zshrc
+chsh -s "$(which zsh)"
 
 # Correction du warning "no font found in config"
+echo "=== 🔤 Configuration de la console (police Terminus) ==="
 sudo pacman -S --noconfirm terminus-font
 echo -e "KEYMAP=fr\nFONT=Lat2-Terminus16" | sudo tee /etc/vconsole.conf >/dev/null
 sudo systemctl restart systemd-vconsole-setup.service || true
 
 # Nettoyage des fichiers inutiles
+echo "=== 🧹 Nettoyage du cache pacman / paru ==="
 sudo pacman -Sc --noconfirm
 paru -Sc --noconfirm || true
 
 echo ""
 echo "✅ Installation terminée !"
-echo "🔑 Copie ta clé SSH affichée ci-dessus sur GitHub (Settings → SSH Keys → New Key)"
-echo "🎨 Lance 'p10k configure' pour personnaliser ton prompt Powerlevel10k"
-echo "🧰 Ouvre 'GNOME Tweaks' pour ajuster la police JetBrainsMono Nerd Font"
-echo "🧠 VS Code, Discord, Zotero, Chromium et Mattermost sont prêts !"
-echo "🚀 Redémarre le terminal pour profiter du setup complet."
+echo "🔑 Clé SSH GitHub générée SANS mot de passe : ~/.ssh/id_ed25519_github"
+echo "🌐 Page GitHub des clés SSH ouverte dans Chromium : https://github.com/settings/keys"
+echo ""
+echo "👉 Voici ta clé publique GitHub à copier/coller (rappel de fin) :"
+if [ -f ~/.ssh/id_ed25519_github.pub ]; then
+  cat ~/.ssh/id_ed25519_github.pub
+else
+  echo '⚠️ Fichier ~/.ssh/id_ed25519_github.pub introuvable.'
+fi
+echo ""
+echo "🎨 Lance 'p10k configure' dans un nouveau terminal zsh pour personnaliser ton prompt."
+echo "🧰 Ouvre 'GNOME Tweaks' pour régler la police JetBrainsMono Nerd Font."
+echo "🧠 VS Code, Discord, Zotero, Chromium et Mattermost sont prêts."
+echo "🚀 Ouvre un nouveau terminal (ou lance 'exec zsh') pour profiter du setup complet."
