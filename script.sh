@@ -5,7 +5,7 @@ echo "=== 🚀 Mise à jour du système ==="
 sudo pacman -Syu --noconfirm
 
 echo "=== 🧰 Installation des paquets de base ==="
-sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gnome-tweaks gnome-shell-extensions chromium linux-firmware chrome-gnome-shell
+sudo pacman -S --noconfirm git curl wget base-devel zsh fzf neovim python-pip gnome-tweaks gnome-shell-extensions chromium linux-firmware chrome-gnome-shell xclip
 
 chromium https://extensions.gnome.org/extension/3843/just-perfection/ >/dev/null 2>&1 & disown
 
@@ -129,6 +129,7 @@ alias gc='git commit -m'
 alias v='nvim'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias password='printf "40Verdure!passer" | xclip -selection clipboard && echo "Mot de passe copié dans le presse-papier."'
 
 # Couleurs et complétion
 autoload -U colors && colors
