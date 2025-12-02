@@ -198,7 +198,8 @@ cat > ~/.config/Code/User/settings.json <<'EOF'
   "editor.minimap.enabled": false
 }
 EOF
-
+git config --global user.email "thomas.landais9733@gmail.com"
+git config --global user.name "LandOS973"
 echo "=== 🐚 Passage à zsh comme shell par défaut ==="
 chsh -s "$(which zsh)"
 
