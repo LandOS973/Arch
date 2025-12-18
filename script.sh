@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-echo "=== 🔒 Gel kernel & NVIDIA ==="
-if ! grep -q "^IgnorePkg" /etc/pacman.conf; then
-  sudo sed -i '/^\[options\]/a IgnorePkg = linux linux-headers nvidia nvidia-dkms nvidia-utils nvidia-settings' /etc/pacman.conf
-else
-  sudo sed -i 's/^IgnorePkg.*/IgnorePkg = linux linux-headers nvidia nvidia-dkms nvidia-utils nvidia-settings/' /etc/pacman.conf
-fi
+echo "=== 🔒 Gel kernel & NVIDIA (pacman) ==="
+
+sudo sed -i '
+/^\[options\]/,/^\[/{ 
+  s/^IgnorePkg.*/IgnorePkg = linux linux-headers nvidia nvidia-dkms nvidia-utils nvidia-settings/
+  t
+  /^\[options\]/a IgnorePkg = linux linux-headers nvidia nvidia-dkms nvidia-utils nvidia-settings
+}' /etc/pacman.conf
+
 
 echo "=== 🚀 Mise à jour du système ==="
 sudo pacman -Syu --noconfirm
